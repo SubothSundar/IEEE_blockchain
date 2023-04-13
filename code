@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>MetaMask Integration Example</title>
+  </head>
+  <body>
+    <h1>Integrate metamask in a simple web app using web3.js</h1>
+    <button id="connectButton">Connect to MetaMask</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script>
+      const connectButton = document.getElementById('connectButton');
+
+      connectButton.addEventListener('click', async () => {
+        
+        if (typeof window.ethereum !== 'undefined') {       // To Check whether MetaMask is installed or not
+          
+          const web3 = new Web3(window.ethereum);          //To Connect to the Ethereum network using MetaMask
+          try {
+            
+            await window.ethereum.request({ method: 'eth_requestAccounts' }); //Requesting access to the account if needed
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          alert('Please install MetaMask to use this dApp!');
+        }
+      });
+    </script>
+  </body>
+</html>

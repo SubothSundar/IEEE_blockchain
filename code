@@ -1,30 +1,29 @@
 <!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>MetaMask Integration Example</title>
+    <title>To Integrate metamask in a simple web app using web3.js.</title>
   </head>
   <body>
-    <h1>Integrate metamask in a simple web app using web3.js</h1>
-    <button id="connectButton">Connect to MetaMask</button>
-
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <h1>Web3.js and MetaMask Example</h1>
+    <button id="connectButton">Connect to MetaMask</button>                           
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>   <!-- To use the Web3.js library in a web page, the src attribute of a <script>-->
     <script>
       const connectButton = document.getElementById('connectButton');
-
-      connectButton.addEventListener('click', async () => {
-        
-        if (typeof window.ethereum !== 'undefined') {       // To Check whether MetaMask is installed or not
+      connectButton.addEventListener('click', async () => {              
+        if (typeof window.ethereum !== 'undefined') {                    // to check whether metamask is installed or not
+          console.log('MetaMask is installed!');
+  
+          await window.ethereum.request({ method: 'eth_requestAccounts' }); // to Request account access if needed
           
-          const web3 = new Web3(window.ethereum);          //To Connect to the Ethereum network using MetaMask
-          try {
-            
-            await window.ethereum.request({ method: 'eth_requestAccounts' }); //Requesting access to the account if needed
-          } catch (error) {
-            console.error(error);
-          }
+          const web3 = new Web3(window.ethereum);                   // Create a new web3 instance using MetaMask provider
+        
+          const networkId = await web3.eth.net.getId();
+          console.log('Connected to network with ID:', networkId); // to Get the id of the current network
         } else {
-          alert('Please install MetaMask to use this dApp!');
+          console.log('MetaMask is not installed!');
         }
       });
     </script>
